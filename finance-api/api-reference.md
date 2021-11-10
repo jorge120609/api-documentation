@@ -23,9 +23,9 @@ The Finance API is used to fetch finance-related information that is processed t
 * [Related API reference](#related-api-reference)
   
 ### Base URL
-https://finance.izettle.com
+`https://finance.izettle.com`
 
-### OAuth Scope
+### OAuth scope
 `READ:FINANCE`
 
 For more information on how to get authorisation for the scope, see [OAuth2 API](../authorization.md).
@@ -35,7 +35,7 @@ Returns the balance in a merchant's preliminary or liquid account at a specific 
 
 After a deposit has been made from a merchant's liquid account to their bank account or PayPal Wallet for PayPal users (daily, weekly or monthly), the balance is usually zero or the minimum account balance in the merchant's Zettle account. In other cases, you can see how much money is in the merchant's Zettle account.
 
-```
+```http
 GET /organizations/{organizationUuid}/accounts/{accountTypeGroup}/balance
 ```
 
@@ -48,7 +48,7 @@ See example [Fetch current balance for a liquid account](#fetch-current-balance-
 
 |Name |Type |In |Required/Optional |Description
 |:---- |:---- |:---- |:---- |:----
-|organizationUuid |string |path |required |Unique identifier for your organisation. You can specify the value with one of the following: <br/><ul><li> Use `self` as the value. This will retrieve your organizationUuid from the authentication token in the request.</li><li> Get it by using the https://oauth.izettle.com/users/me endpoint of OAuth2 API. See [OAuth2 API](../authorization.md) for more information.</li></ul> 
+|organizationUuid |string |path |required |Unique identifier for your organisation. You can specify the value with one of the following: <br/><ul><li>Use `self` as the value. This will retrieve your organizationUuid from the authentication token in the request.</li><li>Get it by using the `users/me` endpoint of OAuth2 API. For more information, see [OAuth2 API](../authorization.md).</li></ul> 
 |accountTypeGroup |string |path |required |The type of a merchant's Zettle account. You can use one of the following account types: <br/><ul><li> `PRELIMINARY` account where transactions are to be confirmed.</li><li> `LIQUID` account where transactions are to be paid out to the merchant.</li></ul>
 |at |string |query |optional |Used to fetch account balance that is available at a UTC time. If it's used, any transaction after that point will be ignored. If it's not used, the balance of all transactions at the current point of time is returned. <br/>You can specify a UTC time in one of the following formats: <br/><ul><li>`YYYY-MM` to specify a month. By default, it specifies the first second of the first day in the month. For example, for `2020-11`, the time will be `2020-11-01T00:00:00`.</li><li>`YYYY-MM-DD` to specify a date. For example, `2020-11-29`.</li><li>`YYYY-MM-DDThh:mm:ss` to specify a time. For example, `2020-11-29T03:10:02`.</li></ul>
 </details>
@@ -80,7 +80,7 @@ See example [Fetch current balance for a liquid account](#fetch-current-balance-
 ## Fetch account transactions
 Returns all transactions or transactions of certain types from a merchant's preliminary or liquid account during a specific period.
 
-```
+```http
 GET /organizations/{organizationUuid}/accounts/{accountTypeGroup}/transactions?start={start_time}&end={end_time}
 ```
 
@@ -93,11 +93,11 @@ See example [Fetch transactions for a liquid account](#fetch-transactions-for-a-
 
 |Name |Type |In |Required/Optional |Description
 |:---- |:---- |:---- |:---- |:----
-|organizationUuid |string |path |required |Unique identifier for your organisation. You can specify the value with one of the following: <br/><ul><li> Use `self` as the value. This will retrieve your organizationUuid from the authentication token in the request.</li><li> Get it by using the https://oauth.izettle.com/users/me endpoint of OAuth2 API. See [OAuth2 API](../authorization.md) for more information.</li></ul> 
+|organizationUuid |string |path |required |Unique identifier for your organisation. You can specify the value with one of the following: <br/><ul><li>Use `self` as the value. This will retrieve your organizationUuid from the authentication token in the request.</li><li>Get it by using the `users/me` endpoint of OAuth2 API. For more information, see [OAuth2 API](../authorization.md).</li></ul> 
 |accountTypeGroup |string |path |required |The type of a merchant's Zettle account. You can use one of the following account types: <br/><ul><li> `PRELIMINARY` account where transactions are to be confirmed.</li><li> `LIQUID` account where transactions are to be paid out to the merchant.</li></ul>
 |start |string |query |required |A start time in UTC (inclusive) from when the transactions will be fetched. You can specify a UTC time in one of the following formats: <br/><ul><li>`YYYY-MM` to specify a month. By default, it specifies the first second of the first day in the month. For example, for `2020-11`, the time will be `2020-11-01T00:00:00`.</li><li>`YYYY-MM-DD` to specify a date. For example, `2020-11-29`.</li><li>`YYYY-MM-DDThh:mm:ss` to specify a time. For example, `2020-11-29T03:10:02`.</li></ul>
 |end |string |query |required |An end time in UTC (exclusive) before when the transactions will be fetched. You can specify a UTC time in one of the following formats: <br/><ul><li>`YYYY-MM` to specify a month. By default, it specifies the first second of the first day in the month. For example, for `2020-11`, the time will be `2020-11-01T00:00:00`.</li><li>`YYYY-MM-DD` to specify a date. For example, `2020-11-29`.</li><li>`YYYY-MM-DDThh:mm:ss` to specify a time. For example, `2020-11-29T03:10:02`.</li></ul>
-|includeTransactionType |string |query |optional |Which transaction types to fetch. <br>You can include more than one [supported transaction types](#supported-transaction-types) in a request.  
+|includeTransactionType |string |query |optional |Which transaction types to fetch. <br>In a request, you can include more than one [supported transaction types](#supported-transaction-types).  
 |limit |integer |query |optional |The maximum number of transactions to return in a response. You can specify `limit` with any integer greater than 0.<br/>To avoid a big dataset in a response, use `limit` and `offset` together to set response pagination.<br/>For example, to return three transaction at a time for all transactions during a specific period, set `limit` as `3` and `offset` as `0` in the first request. Then set `limit` as `3` and increment `offset` with `3` in the second request and repeat the request until all transactions are fetched. See examples in [Fetch account transactions](user-guides/fetch-account-transactions.md).
 |offset |integer |query |optional |The number of transactions to skip before beginning to return in a response. You can specify `offset` with any integer greater than or equal to 0.  Use `limit` and `offset` together to set response pagination to avoid a big dataset in a response.
 </details>
@@ -164,7 +164,7 @@ A payout is to deposit the account balance to the merchant's bank account or the
 
 If the merchant's configuration has a minimum account balance, then the payout will deposit the account balance minus the minimum account balance.
 
-```
+```http
 GET /organizations/{organizationUuid}/payout-info
 ```
 
@@ -177,7 +177,7 @@ See example [Fetch payout information on a specific period](#fetch-payout-inform
 
 |Name |Type |In |Required/Optional |Description
 |:---- |:---- |:---- |:---- |:----
-|organizationUuid |string |path |required |Unique identifier for your organisation. You can specify the value with one of the following: <br/><ul><li> Use `self` as the value. This will retrieve your organizationUuid from the authentication token in the request.</li><li> Get it by using the https://oauth.izettle.com/users/me endpoint of OAuth2 API. See [OAuth2 API](../authorization.md) for more information.</li></ul> 
+|organizationUuid |string |path |required |Unique identifier for your organisation. You can specify the value with one of the following: <br/><ul><li>Use `self` as the value. This will retrieve your organizationUuid from the authentication token in the request.</li><li>Get it by using the `users/me` endpoint of OAuth2 API. For more information, see [OAuth2 API](../authorization.md).</li></ul> 
 |at |string |query |optional |Used to fetch payouts at a certain point in UTC time. If it's used, any transaction after that time will be ignored. If it's not used, the balance of all transactions at the current point of time is returned. <br/>You can specify a UTC time in one of the following formats: <br/><ul><li>`YYYY-MM` to specify a month. For example, `2020-11`. By default, it specifies the first second of the first day in the month.</li><li>`YYYY-MM-DD` to specify a date. For example, `2020-11-29`.</li><li>`YYYY-MM-DDThh:mm:ss` to specify a time. For example, `2020-11-29T03:10:02`.</li></ul>
 </details>
 
@@ -214,7 +214,7 @@ See example [Fetch payout information on a specific period](#fetch-payout-inform
 In the following example, the current balance, which is £1.95, is fetched by default, since `at` is not specified.
 
 Request
-```
+```http
 GET /organizations/self/accounts/liquid/balance
 ```
 Response
@@ -231,7 +231,7 @@ Response
 The following example fetches transactions from the merchant's liquid account from 1 January, 2020 to 31 December, 2020.
 
 Request
-```
+```http
 GET /organizations/self/accounts/liquid/transactions?start=2020-01-01&end=2020-12-31
 ```
 
@@ -310,7 +310,7 @@ Response
 The following example fetches all payout information from the merchant's liquid account on 7 June, 2021. The next payout amount will be £6605.89.
 
 Request
-```
+```http
 GET /organizations/self/payout-info?at=2021-06-07
 ```
 Response
