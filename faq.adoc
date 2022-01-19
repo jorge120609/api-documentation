@@ -81,10 +81,18 @@ filter instead of `{organizationUuid}`
 [%collapsible]
 ====
 ****
-You can either use the `self` filter or call the following endpoint to fetch the organization UUID.
+You can use the `self` path parameter instead of specifying organization UUID in an endpoint.
+
+Example request
 [source]
 --
-GET https://oauth.izettle.com/users/me
+GET /organizations/self/accounts/{accountTypeGroup}/balance
+--
+
+Or, you can fetch the organization UUID by calling the following endpoint.
+[source]
+--
+GET https://oauth.zettle.com/users/self
 --
 Example response
 [source,json]
@@ -95,6 +103,13 @@ Example response
     "organizationUuid": "ab305d54-75b4-431b-adb2-eb6b9e546013"
 }
 
+--
+After fetching the organization UUID, you can specify it in an endpoint.
+
+Example request
+[source]
+--
+GET /organizations/ab305d54-75b4-431b-adb2-eb6b9e546013/accounts/{accountTypeGroup}/balance
 --
 
 For more information on the filter and the endpoint, see xref:/authorization.md[OAuth].
