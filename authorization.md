@@ -198,3 +198,9 @@ Authorization: Bearer <access token>
 
 #### Response
 This endpoint will respond with a `204 No Content` HTTP code.
+
+## Example integration using OAuth2 API
+
+The example integration consists of a web app (frontend) and a server app (backend). It initiates an Authorization Code Grant flow where an access token is retrieved and provided through a session cookie to the web app to send requests to other Zettle APIs. When access token and refresh token expire, the server app will refresh them.
+
+To get started with the Authorization Code Grant flow, try the [example integration](https://github.com/iZettle/example-integration).
