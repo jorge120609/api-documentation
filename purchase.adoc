@@ -424,6 +424,43 @@ Example:
       "attributes": {}
     }
 ----
+|PAYPAL_QRC a|Payment made with PayPal QRC.
+
+Example:
+[source,json]
+----
+{
+  "uuid": "52db32fd-89b4-11ec-b518-8e982211523a",
+  "receiverOrganization": "447a72b0-154d-11e7-8113-2320311c0079",
+  "amount": -833,
+  "type": "PAYPAL",
+  "currency": "GBP",
+  "country": "GB",
+  "referenceNumber": "F44DGYZU3B",
+  "references": {
+    "checkoutUUID": "506bde8e-89b4-11ec-81f9-7b0de739711d",
+    "refundsPayment": "39348dbf-89b4-11ec-a9fc-485d6eb3d389"
+  },
+  "commission": {
+    "totalAmount": -23,
+    "vatAmount": 0,
+    "vatRate": 0.0,
+    "modelId": "42ca2bf6-c3a5-11eb-bc48-b9fc217de8ef",
+    "model": {
+      "fixed": 0,
+      "percentage": 2.75
+    }
+  },
+  "createdAt": "2022-02-09T14:26:53.480+0000",
+  "details": {
+    "transactionId": "0ET61092H4369511T",
+    "acquiringChannel": "IN_STORE",
+    "affectedPaymentUuid": "39348dbf-89b4-11ec-a9fc-485d6eb3d389",
+    "paypalTransactionId": "0ET61092H4369511T"
+  },
+  "attributes": {}
+}
+----
 |===
 
 
